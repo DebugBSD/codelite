@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 //
-// Copyright            : (C) 2015 Eran Ifrah
-// File name            : php_helpers.h
+// copyright            : (C) 2014 Eran Ifrah
+// file name            : clcommandlineparser.h
 //
 // -------------------------------------------------------------------------
 // A
@@ -23,19 +23,24 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-#ifndef PHP_HELPERS_H
-#define PHP_HELPERS_H
+#ifndef CLCOMMANDLINEPARSER_H
+#define CLCOMMANDLINEPARSER_H
 
 #include <wx/string.h>
-#define PHP_PREFIX_WITH_SPACE "<?php "
-#define PHP_PREFIX            "<?php"
+#include <wx/arrstr.h>
 
-template <class T>
-class TDeleter {
-    T* m_token;
+class clCommandLineParser
+{
+    wxString m_commandline;
+    wxArrayString m_tokens;
+
+protected:
+    void DoParse();
+
 public:
-    TDeleter(T* token) : m_token( token ) {}
-    ~TDeleter() { wxDELETE(m_token); }
+    clCommandLineParser(const wxString& str);
+
+    const wxArrayString& ToArray() const { return m_tokens; }
 };
 
-#endif //  PHP_HELPERS_H
+#endif // CLCOMMANDLINEPARSER_H

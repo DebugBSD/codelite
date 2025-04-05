@@ -1,13 +1,9 @@
 #include "CompileCommandsGenerator.h"
 
 #include "AsyncProcess/processreaderthread.h"
-#include "CompileFlagsTxt.h"
 #include "FileSystemWorkspace/clFileSystemWorkspace.hpp"
 #include "JSON.h"
-#include "clFilesCollector.h"
 #include "cl_config.h"
-#include "clcommandlineparser.h"
-#include "compiler_command_line_parser.h"
 #include "environmentconfig.h"
 #include "event_notifier.h"
 #include "file_logger.h"
@@ -24,14 +20,14 @@ wxDEFINE_EVENT(wxEVT_COMPILE_COMMANDS_JSON_GENERATED, clCommandEvent);
 
 CompileCommandsGenerator::CompileCommandsGenerator()
 {
-    Bind(wxEVT_ASYNC_PROCESS_TERMINATED, &CompileCommandsGenerator::OnProcessTeraminated, this);
+    Bind(wxEVT_ASYNC_PROCESS_TERMINATED, &CompileCommandsGenerator::OnProcessTerminated, this);
     Bind(wxEVT_ASYNC_PROCESS_OUTPUT, &CompileCommandsGenerator::OnProcessOutput, this);
 }
 
 CompileCommandsGenerator::~CompileCommandsGenerator()
 {
-    // If the child process is still running, detach from it. i.e. OnProcessTeraminated() event is not called
-    Unbind(wxEVT_ASYNC_PROCESS_TERMINATED, &CompileCommandsGenerator::OnProcessTeraminated, this);
+    // If the child process is still running, detach from it. i.e. OnProcessTerminated() event is not called
+    Unbind(wxEVT_ASYNC_PROCESS_TERMINATED, &CompileCommandsGenerator::OnProcessTerminated, this);
     Unbind(wxEVT_ASYNC_PROCESS_OUTPUT, &CompileCommandsGenerator::OnProcessOutput, this);
     if(m_process) {
         m_process->Detach();
@@ -44,7 +40,7 @@ static CheckSum_t ComputeFileCheckSum(const wxFileName& fn) { return wxMD5::GetD
 
 void CompileCommandsGenerator::OnProcessOutput(clProcessEvent& event) { m_capturedOutput << event.GetOutput(); }
 
-void CompileCommandsGenerator::OnProcessTeraminated(clProcessEvent& event)
+void CompileCommandsGenerator::OnProcessTerminated(clProcessEvent& event)
 {
     // dont call event.Skip() so we will delete the m_process ourself
     wxDELETE(m_process);
