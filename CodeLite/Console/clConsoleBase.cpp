@@ -12,6 +12,7 @@
 #include "clConsoleQTerminal.h"
 #include "clConsoleRXVTerminal.h"
 #include "clConsoleXfce4Terminal.h"
+#include "clConsoleXTERMTerminal.h"
 #include "cl_config.h"
 #include "file_logger.h"
 #include "fileutils.h"
@@ -76,6 +77,8 @@ clConsoleBase::Ptr_t clConsoleBase::GetTerminal()
         terminal.reset(new clConsoleQTerminal());
     } else if(terminalName.CmpNoCase("rxvt-unicode") == 0) {
         terminal.reset(new clConsoleRXVTTerminal());
+    } else if(terminalName.CmpNoCase("xterm") == 0) {
+        terminal.reset(new clConsoleXTERMTerminal());
     } else {
         // the default terminal is "gnome-terminal"
         terminal.reset(new clConsoleGnomeTerminal());
@@ -101,7 +104,7 @@ wxArrayString clConsoleBase::GetAvailableTerminals()
         "CMD",
 #elif defined(__WXGTK__)
         "konsole", "gnome-terminal", "lxterminal", "mate-terminal", "qterminal", "xfce4-terminal", "rxvt-unicode",
-        "Kitty",
+        "Kitty", "xterm",
 #else
         "Terminal", "iTerm2", "Kitty",
 #endif

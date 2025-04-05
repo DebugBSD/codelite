@@ -132,7 +132,11 @@ wxString clConsoleGnomeTerminal::PrepareCommand()
     if(hasCommand) {
         wxFileName scriptPath = PrepareExecScript();
         wxString rowCommand;
+#if defined(__OpenBSD__)
+        rowCommand << "/bin/ksh \"" << scriptPath.GetFullPath() << "\"";
+#else
         rowCommand << "/bin/bash -f \"" << scriptPath.GetFullPath() << "\"";
+#endif
         commandToExecute.Replace("%COMMAND%", rowCommand);
     }
     return commandToExecute;
