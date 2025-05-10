@@ -2,8 +2,8 @@
 
 #include "StdToWX.h"
 #include "allocator_mgr.h"
+#include "bitmap_picker_property.h"
 #include "choice_property.h"
-#include "file_ficker_property.h"
 #include "menu_bar_wrapper.h"
 #include "status_bar_wrapper.h"
 #include "toolbar_base_wrapper.h"
@@ -17,7 +17,6 @@
 #include <wx/filename.h>
 #include <wx/frame.h>
 #include <wx/msgdlg.h>
-#include <wx/tokenzr.h>
 #include <wx/toplevel.h>
 
 FrameWrapper::FrameWrapper()
@@ -36,17 +35,17 @@ FrameWrapper::FrameWrapper()
     RegisterEvent(wxT("wxEVT_ACTIVATE"), wxT("wxActivateEvent"), _("Process a wxEVT_ACTIVATE event"));
     RegisterEvent(wxT("wxEVT_ACTIVATE_APP"), wxT("wxActivateEvent"), _("Process a wxEVT_ACTIVATE_APP event"));
 
-    AddCategory(_("Frame Type"));
+    Add<CategoryProperty>(_("Frame Type"));
     const wxArrayString frameTypes = StdToWX::ToArrayString({ "wxFrame", "wxDocMDIParentFrame", "wxDocMDIChildFrame",
                                                               "wxDocParentFrame", "wxDocChildFrame", "wxMiniFrame" });
-    AddProperty(new ChoiceProperty(PROP_FRAME_TYPE, frameTypes, 0, _("Select the wxFrame type you want")));
+    Add<ChoiceProperty>(PROP_FRAME_TYPE, frameTypes, 0, _("Select the wxFrame type you want"));
 
-    AddCategory(_("Frame Icons"));
-    AddProperty(new BitmapPickerProperty(PROP_BITMAP_PATH_16, wxT(""), _("Select a 16x16 bitmap")));
-    AddProperty(new BitmapPickerProperty(PROP_BITMAP_PATH_32, wxT(""), _("Select a 32x32 bitmap")));
-    AddProperty(new BitmapPickerProperty(PROP_BITMAP_PATH_64, wxT(""), _("Select a 64x64 bitmap")));
-    AddProperty(new BitmapPickerProperty(PROP_BITMAP_PATH_128, wxT(""), _("Select a 128x128 bitmap")));
-    AddProperty(new BitmapPickerProperty(PROP_BITMAP_PATH_256, wxT(""), _("Select a 256x256 bitmap")));
+    Add<CategoryProperty>(_("Frame Icons"));
+    Add<BitmapPickerProperty>(PROP_BITMAP_PATH_16, wxT(""), _("Select a 16x16 bitmap"));
+    Add<BitmapPickerProperty>(PROP_BITMAP_PATH_32, wxT(""), _("Select a 32x32 bitmap"));
+    Add<BitmapPickerProperty>(PROP_BITMAP_PATH_64, wxT(""), _("Select a 64x64 bitmap"));
+    Add<BitmapPickerProperty>(PROP_BITMAP_PATH_128, wxT(""), _("Select a 128x128 bitmap"));
+    Add<BitmapPickerProperty>(PROP_BITMAP_PATH_256, wxT(""), _("Select a 256x256 bitmap"));
 
     m_namePattern = wxT("MyFrame");
     SetName(GenerateName());

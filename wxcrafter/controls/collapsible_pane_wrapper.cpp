@@ -3,7 +3,6 @@
 #include "allocator_mgr.h"
 #include "bool_property.h"
 #include "wxgui_defs.h"
-#include "wxgui_helpers.h"
 
 #include <wx/collpane.h>
 
@@ -18,8 +17,8 @@ CollapsiblePaneWrapper::CollapsiblePaneWrapper()
     PREPEND_STYLE(wxCP_NO_TLW_RESIZE, false);
 
     SetPropertyString(_("Common Settings"), "wxCollapsiblePane");
-    AddProperty(new StringProperty(PROP_LABEL, _("Label"), _("The label")));
-    AddProperty(new BoolProperty(PROP_COLLAPSED, true, _("Set the state of the collapsible pane")));
+    Add<StringProperty>(PROP_LABEL, _("Label"), _("The label"));
+    Add<BoolProperty>(PROP_COLLAPSED, true, _("Set the state of the collapsible pane"));
     m_namePattern = "m_collPane";
     SetName(GenerateName());
 }

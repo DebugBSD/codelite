@@ -2,8 +2,8 @@
 
 #include "StdToWX.h"
 #include "allocator_mgr.h"
+#include "bitmap_picker_property.h"
 #include "choice_property.h"
-#include "file_ficker_property.h"
 #include "wxc_bitmap_code_generator.h"
 #include "wxgui_bitmaploader.h"
 #include "wxgui_helpers.h"
@@ -28,10 +28,10 @@ RibbonButtonBase::RibbonButtonBase(int type)
         selection = 3;
     }
 
-    AddProperty(new StringProperty(PROP_LABEL, _("Button"), _("The button label")));
-    AddProperty(new BitmapPickerProperty(PROP_BITMAP_PATH, "", _("Select the bitmap file")));
-    AddProperty(new StringProperty(PROP_HELP, "Help String", _("Help string")));
-    AddProperty(new ChoiceProperty(PROP_KIND, kind, selection, _("The button type")));
+    Add<StringProperty>(PROP_LABEL, _("Button"), _("The button label"));
+    Add<BitmapPickerProperty>(PROP_BITMAP_PATH, "", _("Select the bitmap file"));
+    Add<StringProperty>(PROP_HELP, "Help String", _("Help string"));
+    Add<ChoiceProperty>(PROP_KIND, kind, selection, _("The button type"));
 
     wxCrafter::ResourceLoader bl;
     if(m_isButtonBar) {

@@ -3,20 +3,18 @@
 #include "allocator_mgr.h"
 #include "int_property.h"
 
-#include <wx/ribbon/toolbar.h>
-
 RibbonToolBarWrapper::RibbonToolBarWrapper()
     : wxcWidget(ID_WXRIBBONTOOLBAR)
 {
     SetPropertyString(_("Common Settings"), "wxRibbonToolBar");
     DelProperty(PROP_CONTROL_SPECIFIC_SETTINGS);
-    AddProperty(new CategoryProperty("wxRibbonToolBar"));
+    Add<CategoryProperty>("wxRibbonToolBar");
 
-    AddProperty(new IntProperty(PROP_RIBBON_TOOLBAR_MIN_ROWS, 1,
-                                _("Set the minimum number of rows to distribute tool groups over")));
-    AddProperty(
-        new IntProperty(PROP_RIBBON_TOOLBAR_MAX_ROWS, -1,
-                        _("Set the maximum number of rows to distribute tool groups over. Use -1 as default value")));
+    Add<IntProperty>(
+        PROP_RIBBON_TOOLBAR_MIN_ROWS, 1, _("Set the minimum number of rows to distribute tool groups over"));
+    Add<IntProperty>(PROP_RIBBON_TOOLBAR_MAX_ROWS,
+                     -1,
+                     _("Set the maximum number of rows to distribute tool groups over. Use -1 as default value"));
 
     m_namePattern = "m_ribbonToolbar";
     SetName(GenerateName());

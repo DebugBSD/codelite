@@ -1,9 +1,9 @@
 #include "menu_item_wrapper.h"
 
 #include "allocator_mgr.h"
+#include "bitmap_picker_property.h"
 #include "bool_property.h"
 #include "choice_property.h"
-#include "file_ficker_property.h"
 #include "import_from_wxFB.h"
 #include "import_from_xrc.h"
 #include "winid_property.h"
@@ -27,21 +27,21 @@ MenuItemWrapper::MenuItemWrapper()
     m_properties.DeleteValues();
 
     SetPropertyString(_("Common Settings"), "wxMenuItem");
-    AddProperty(new CategoryProperty(_("Common Settings")));
-    AddProperty(new WinIdProperty());
-    AddProperty(new StringProperty(PROP_NAME, "", _("C++ variable name")));
-    AddProperty(new CategoryProperty(_("Menu Item")));
-    AddProperty(new StringProperty(PROP_LABEL, label, _("The menu item label")));
-    AddProperty(new StringProperty(PROP_ACCELERATOR, "", _("Keyboard Shortcut")));
-    AddProperty(new StringProperty(PROP_HELP, "", _("Short help string")));
-    AddProperty(new BitmapPickerProperty(PROP_BITMAP_PATH, "", _("Menu item image")));
+    Add<CategoryProperty>(_("Common Settings"));
+    Add<WinIdProperty>();
+    Add<StringProperty>(PROP_NAME, "", _("C++ variable name"));
+    Add<CategoryProperty>(_("Menu Item"));
+    Add<StringProperty>(PROP_LABEL, label, _("The menu item label"));
+    Add<StringProperty>(PROP_ACCELERATOR, "", _("Keyboard Shortcut"));
+    Add<StringProperty>(PROP_HELP, "", _("Short help string"));
+    Add<BitmapPickerProperty>(PROP_BITMAP_PATH, "", _("Menu item image"));
 
     m_namePattern = wxT("m_menuItem");
     SetName(GenerateName());
 
-    AddProperty(new ChoiceProperty(PROP_KIND, wxCrafter::GetToolTypes(), 0,
-                                   _("The type of menu item: normal, radio, checkable or separator")));
-    AddProperty(new BoolProperty(PROP_CHECKED, false, _("For a checkable menu item, should this be checked")));
+    Add<ChoiceProperty>(
+        PROP_KIND, wxCrafter::GetToolTypes(), 0, _("The type of menu item: normal, radio, checkable or separator"));
+    Add<BoolProperty>(PROP_CHECKED, false, _("For a checkable menu item, should this be checked"));
 }
 
 MenuItemWrapper::~MenuItemWrapper() {}

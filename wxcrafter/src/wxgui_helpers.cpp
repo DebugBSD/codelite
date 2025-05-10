@@ -2,12 +2,10 @@
 
 #include "StdToWX.h"
 #include "cl_command_event.h"
-#include "event_notifier.h"
 #include "file_logger.h"
 #include "macros.h"
 #include "main.h"
 #include "map"
-#include "plugin.h"
 #include "project.h"
 #include "workspace.h"
 #include "wxc_project_metadata.h"
@@ -30,6 +28,11 @@
 #include <wx/tokenzr.h>
 #include <wx/xml/xml.h>
 #include <wx/xrc/xmlres.h>
+
+#if !STANDALONE_BUILD
+#include "codelite_events.h"
+#include "event_notifier.h"
+#endif
 
 namespace
 {
@@ -1390,8 +1393,9 @@ void wxCrafter::GetProjectFiles(const wxString& projectName, wxStringSet_t& file
     }
     const Project::FilesMap_t& filesMap = p->GetFiles();
     files.reserve(filesMap.size());
-    std::for_each(filesMap.begin(), filesMap.end(),
-                  [&](const Project::FilesMap_t::value_type& vt) { files.insert(vt.first); });
+    for (const auto& p : filesMap) {
+        files.insert(p.first);
+    }
 }
 
 void wxCrafter::FormatString(wxString& content, const wxFileName& filename)

@@ -1,5 +1,7 @@
 #include "bitmaptogglebuttonwrapper.h"
+
 #include "allocator_mgr.h"
+#include "bitmap_picker_property.h"
 #include "wxc_bitmap_code_generator.h"
 #include "wxgui_defs.h"
 
@@ -7,8 +9,8 @@ BitmapToggleButtonWrapper::BitmapToggleButtonWrapper()
     : wxcWidget(ID_WXBITMAPTOGGLEBUTTON)
 {
     SetPropertyString(_("Common Settings"), "wxBitmapToggleButton");
-    AddProperty(new BitmapPickerProperty(PROP_BITMAP_PATH, "", _("The bitmap")));
-    AddProperty(new BoolProperty(PROP_CHECKED, false, _("The button initial state")));
+    Add<BitmapPickerProperty>(PROP_BITMAP_PATH, "", _("The bitmap"));
+    Add<BoolProperty>(PROP_CHECKED, false, _("The button initial state"));
 
     PREPEND_STYLE(wxBU_BOTTOM, false);
     PREPEND_STYLE(wxBU_EXACTFIT, false);

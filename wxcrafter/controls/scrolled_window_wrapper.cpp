@@ -1,9 +1,9 @@
 #include "scrolled_window_wrapper.h"
+
 #include "allocator_mgr.h"
 #include "wxgui_defs.h"
 #include "wxgui_helpers.h"
 #include "xmlutils.h"
-#include <wx/scrolwin.h>
 
 ScrolledWindowWrapper::ScrolledWindowWrapper()
     : wxcWidget(ID_WXSCROLLEDWIN)
@@ -12,10 +12,8 @@ ScrolledWindowWrapper::ScrolledWindowWrapper()
     EnableStyle(wxT("wxVSCROLL"), true);
 
     SetPropertyString(_("Common Settings"), "wxScrolledWindow");
-    AddProperty(
-        new StringProperty(PROP_SCROLL_RATE_X, wxT("5"), _("Pixels per scroll unit in the horizontal direction")));
-    AddProperty(
-        new StringProperty(PROP_SCROLL_RATE_Y, wxT("5"), _("Pixels per scroll unit in the vertical direction")));
+    Add<StringProperty>(PROP_SCROLL_RATE_X, wxT("5"), _("Pixels per scroll unit in the horizontal direction"));
+    Add<StringProperty>(PROP_SCROLL_RATE_Y, wxT("5"), _("Pixels per scroll unit in the vertical direction"));
 
     RegisterEvent("wxEVT_SCROLLWIN_TOP", "wxScrollWinEvent",
                   _("Since wxWidgets 2.9.X\nProcess wxEVT_SCROLLWIN_TOP scroll-to-top events"));

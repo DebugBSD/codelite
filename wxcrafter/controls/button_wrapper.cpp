@@ -2,13 +2,12 @@
 
 #include "StdToWX.h"
 #include "allocator_mgr.h"
+#include "bitmap_picker_property.h"
 #include "bool_property.h"
 #include "choice_property.h"
-#include "file_ficker_property.h"
 #include "import_from_wxFB.h"
 #include "import_from_xrc.h"
 #include "wxc_bitmap_code_generator.h"
-#include "wxgui_bitmaploader.h"
 #include "wxgui_defs.h"
 #include "wxgui_helpers.h"
 #include "xmlutils.h"
@@ -33,14 +32,16 @@ ButtonWrapper::ButtonWrapper()
 
     m_namePattern = wxT("m_button");
     SetPropertyString(_("Common Settings"), "wxButton");
-    AddProperty(new StringProperty(PROP_LABEL, _("My Button"), _("The button label")));
-    AddProperty(new BoolProperty(PROP_DEFAULT_BUTTON, false, _("Make this button the default button")));
-    AddProperty(new BitmapPickerProperty(PROP_BITMAP_PATH, wxT(""), _("Select the bitmap file (wx2.9.X and later)")));
-    AddProperty(new ChoiceProperty(PROP_DIRECTION, directions, 0,
-                                   _("The position of the bitmap inside the button. By default it is positioned to "
-                                     "the left of the text, near to the left button border. ")));
-    AddProperty(new StringProperty(PROP_MARGINS, "2,2",
-                                   _("Sets x/y margins between the bitmap and the button label (wx2.9.X and later)")));
+    Add<StringProperty>(PROP_LABEL, _("My Button"), _("The button label"));
+    Add<BoolProperty>(PROP_DEFAULT_BUTTON, false, _("Make this button the default button"));
+    Add<BitmapPickerProperty>(PROP_BITMAP_PATH, wxT(""), _("Select the bitmap file (wx2.9.X and later)"));
+    Add<ChoiceProperty>(PROP_DIRECTION,
+                        directions,
+                        0,
+                        _("The position of the bitmap inside the button. By default it is positioned to "
+                          "the left of the text, near to the left button border. "));
+    Add<StringProperty>(
+        PROP_MARGINS, "2,2", _("Sets x/y margins between the bitmap and the button label (wx2.9.X and later)"));
 
     // wxCrafter::ResourceLoader bl;
     // m_properties.Item(PROP_BITMAP_PATH)->SetValue( bl.GetPlaceHolder16ImagePath().GetFullPath() );

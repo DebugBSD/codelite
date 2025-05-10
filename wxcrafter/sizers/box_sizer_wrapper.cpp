@@ -4,7 +4,6 @@
 #include "allocator_mgr.h"
 #include "choice_property.h"
 #include "wxgui_defs.h"
-#include "wxgui_helpers.h"
 #include "xmlutils.h"
 
 BoxSizerWrapper::BoxSizerWrapper()
@@ -15,7 +14,7 @@ BoxSizerWrapper::BoxSizerWrapper()
     const wxArrayString arr = StdToWX::ToArrayString({ "wxVERTICAL", "wxHORIZONTAL" });
 
     SetPropertyString(_("Common Settings"), "wxBoxSizer");
-    AddProperty(new ChoiceProperty(PROP_ORIENTATION, arr, 0, _("Sizer orientation")));
+    Add<ChoiceProperty>(PROP_ORIENTATION, arr, 0, _("Sizer orientation"));
 
     EnableSizerFlag("wxEXPAND", true);
     m_sizerItem.SetProportion(1);

@@ -1,22 +1,20 @@
 #include "ribbon_page_wrapper.h"
 
 #include "allocator_mgr.h"
+#include "bitmap_picker_property.h"
 #include "bool_property.h"
-#include "file_ficker_property.h"
 #include "string_property.h"
 #include "wxc_bitmap_code_generator.h"
 #include "wxgui_defs.h"
-
-#include <wx/ribbon/page.h>
 
 RibbonPageWrapper::RibbonPageWrapper()
     : wxcWidget(ID_WXRIBBONPAGE)
     , m_selected(false)
 {
     SetPropertyString(_("Common Settings"), "wxRibbonPage");
-    AddProperty(new BitmapPickerProperty(PROP_BITMAP_PATH, "", _("Page Icon")));
-    AddProperty(new StringProperty(PROP_LABEL, "Page", _("Page Label")));
-    AddProperty(new BoolProperty(PROP_SELECTED, false, _("Selected")));
+    Add<BitmapPickerProperty>(PROP_BITMAP_PATH, "", _("Page Icon"));
+    Add<StringProperty>(PROP_LABEL, "Page", _("Page Label"));
+    Add<BoolProperty>(PROP_SELECTED, false, _("Selected"));
     m_namePattern = "m_ribbonPage";
     SetName(GenerateName());
 }
