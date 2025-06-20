@@ -864,7 +864,8 @@ LexerConf::Ptr_t ColoursAndFontsManager::DoAddLexer(JSONItem json)
 
     // Fix C++ lexer
     if (lexer->GetName() == "c++") {
-        AddLexerKeywords(lexer, 0, { "override", "final", "constexpr", "co_return", "co_await", "co_yield" });
+        AddLexerKeywords(
+            lexer, 0, { "override", "final", "constexpr", "co_return", "co_await", "co_yield", "requires", "concept" });
         wxString filespec = lexer->GetFileSpec();
         filespec.Replace("*.javascript", wxEmptyString);
         filespec.Replace("*.js", wxEmptyString);
@@ -1002,7 +1003,7 @@ LexerConf::Ptr_t ColoursAndFontsManager::DoAddLexer(JSONItem json)
 
     // update script lexer with additional keywords
     if (lexer->GetName() == "script") {
-        AddLexerKeywords(lexer, 0, { "return", "exit", "local", "function" });
+        AddLexerKeywords(lexer, 0, { "return", "exit", "local", "function", "export", "case", "esac" });
     }
 
     if (lexer->GetName() == "text") {

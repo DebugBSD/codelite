@@ -2319,7 +2319,7 @@ void clEditor::BraceMatch(long pos)
     SetHighlightGuide(indentCol);
 }
 
-void clEditor::BraceMatch(const bool& bSelRegion)
+void clEditor::BraceMatch(bool bSelRegion)
 {
     // Check if we have a match
     long endPos = wxStyledTextCtrl::BraceMatch(GetCurrentPos());
@@ -5865,10 +5865,10 @@ void clEditor::ToggleLineComment(const wxString& commentSymbol, int commentStyle
 
 void clEditor::CommentBlockSelection(const wxString& commentBlockStart, const wxString& commentBlockEnd)
 {
-    int start = GetSelectionStart();
+    const int start = GetSelectionStart();
     int end = GetSelectionEnd();
     if (LineFromPosition(PositionBefore(end)) != LineFromPosition(end)) {
-        end = PositionBefore(end);
+        end = std::max(start, PositionBefore(end));
     }
     if (start == end)
         return;

@@ -86,7 +86,7 @@ void SizerFlagsListView::Construct(wxPropertyGrid* pg, wxcWidget* wb)
 
     if(m_wxcWidget->IsTopWindow() || !m_wxcWidget->IsSizerItem()) { return; }
 
-    // Popuplate the sizer flags
+    // Populate the sizer flags
     pg->Append(new wxIntProperty(_("Proportion"), wxPG_LABEL, m_wxcWidget->SizerItem().GetProportion()));
     pg->Append(new wxIntProperty(_("Border"), wxPG_LABEL, m_wxcWidget->SizerItem().GetBorder()));
 
@@ -99,7 +99,7 @@ void SizerFlagsListView::Construct(wxPropertyGrid* pg, wxcWidget* wb)
 
     pg->Append(new wxPropertyCategory(_("Sizer Flags")));
 
-    wxcWidget::MapStyles_t flags = m_wxcWidget->GetSizerFlags();
+    const wxcWidget::MapStyles_t& flags = m_wxcWidget->GetSizerFlags();
     wxcWidget::MapStyles_t::ConstIterator iter = flags.Begin();
 
     wxArrayString styles;

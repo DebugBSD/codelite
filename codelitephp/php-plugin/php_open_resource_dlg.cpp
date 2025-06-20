@@ -49,10 +49,8 @@ OpenResourceDlg::OpenResourceDlg(wxWindow* parent, IManager* manager)
     PHPWorkspace::Get()->GetWorkspaceFiles(files);
     m_table.Open(PHPWorkspace::Get()->GetFilename().GetPath());
     m_allFiles.reserve(files.size());
-    wxStringSet_t::iterator iter = files.begin();
-    for(; iter != files.end(); ++iter) {
-        wxFileName fn((*iter));
-        if(fn.GetFullName() == FOLDER_MARKER) {
+    for (wxFileName fn : files) {
+        if (fn.GetFullName() == FOLDER_MARKER) {
             // fake item
             continue;
         }
@@ -152,11 +150,11 @@ void OpenResourceDlg::OnTimer(wxTimerEvent& event)
             if(a.displayName == m_lastFilter) {
                 v1.push_back(a); // Exact match
             } else if(a.displayName.Lower() == lcFilter) {
-                v2.push_back(a); // case insenstive exact match
+                v2.push_back(a); // case insensitive exact match
             } else if(a.displayName.StartsWith(m_lastFilter)) {
                 v3.push_back(a); // starts with
             } else if(a.displayName.Lower().StartsWith(lcFilter)) {
-                v4.push_back(a); // case insenstive starts with
+                v4.push_back(a); // case insensitive starts with
             } else {
                 // other
                 v5.push_back(a);
@@ -202,11 +200,9 @@ void OpenResourceDlg::DoGetResources(const wxString& filter)
     m_table.LoadAllByFilter(matches, filter);
 
     // Convert the PHP matches into resources
-    PHPEntityBase::List_t::iterator iter = matches.begin();
     m_resources.reserve(matches.size());
-    for(; iter != matches.end(); ++iter) {
-        PHPEntityBase::Ptr_t match = *iter;
-        if(FileUtils::FuzzyMatch(filter, match->GetFullName())) {
+    for (PHPEntityBase::Ptr_t match : matches) {
+        if (FileUtils::FuzzyMatch(filter, match->GetFullName())) {
             ResourceItem resource;
             resource.displayName = match->GetDisplayName();
             resource.filename = match->GetFilename();
